@@ -551,7 +551,6 @@ insert into Battery values
 '82.5 g',
 
 '5℃ 至 40℃',
-
 '29 W'
 
 ),
@@ -570,9 +569,7 @@ insert into Battery values
 '29 W',
 
 '5℃ 至 40℃',
-
 '29 W'
-
 );
 
 

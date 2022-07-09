@@ -565,9 +565,7 @@ insert into Battery values
 '13.05 V',
 
 'LiPo 3S',
-
 '29 W',
-
 '5℃ 至 40℃',
 '29 W'
 );

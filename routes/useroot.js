@@ -5,43 +5,7 @@ const pool=require('../pool.js')
 const r=express.Router()
 
 
-//添加用户列表接口(get  /list)
-// {code:200,msg:'查询成功', data: xx}
-
-
-// //2.用户列表接口（get /list）
-// //接口地址：http://127.0.0.1:3000/v1/users/list
-// //请求方式：get
-
-// r.get('/list',(req,res,next)=>{
-	
-// 	console.log(req.query)
-// 	if(!req.query.pno){
-// 		req.query.pno=0
-// 	}
-// 	if(!req.query.count){
-// 		req.query.count=0
-// 	}
-// 	var start=(req.query.pno-1)*req.query.count
-// 	var size=parseInt(req.query.count)
-// 	pool.query('select uid,uname from xz_user limit ?,?',[start,size],(err,r)=>{
-// 		if(err){
-// 			//如果有错误把它交给下一个错误处理中间件
-// 			next(err)
-// 			//阻止往后执行
-// 			return
-			
-// 		}
-// 		console.log(r)
-// 		//查询的结果是数组，把结果响应给前端
-// 		res.send({code:200,msg:'查询成功',data:r})
-// 	})
-	
-	
-// })
-
-//登录接口(post  /login)，传递用户名uname和密码upwd，获取传递的参数；执行SQL命令，查询数据库中是否存在该用户，如果没有{code:501msg:'登录失败'}，否则 {code:200msg:'登录成功'}
-//3.用户登录接口（post /login）
+//1.管理员登录接口（post /rootLogin）
 //接口地址：http://127.0.0.1:3000/useroot/rootLogin
 //请求方式：post
 r.post('/rootLogin',(req,res,next)=>{
@@ -85,6 +49,82 @@ r.post('/rootLogin',(req,res,next)=>{
 	})
 	
 })
+//2. 管理员注册接口(post  /rge)
+//接口地址：http://127.0.0.1:3000/useroot/reg
+//请求方式：post
+r.post('/reg', (req, res) => {
+	//console.log(md5('12345678'));
+	// 获取用户名和密码信息
+	let dname = req.body.dname;
+	let dpwd = req.body.dpwd;
+	//以dname为条件进行查找操作，以保证用户名的唯一性
+	let sql = 'SELECT COUNT(did) AS count FROM admin WHERE dname=?';
+	pool.query(sql, [dname], (error, results) => {
+	  if (error) throw error;
+	  let count = results[0].count;
+	  if (count == 0) {
+		// 将用户的相关信息插入到数据表
+		sql = 'INSERT admin(dname,dpwd) VALUES(?,?)';
+		pool.query(sql, [dname, dpwd], (error, results) => {
+		  if (error) throw error;
+		  res.send({ message: 'ok', code: 200 });
+		})
+	  } else {
+		res.send({ message: 'user exists', code: 201 });
+	  }
+	});
+  });
+
+// 3.删除离职管理员接口(delete  /root)
+// 接口地址：http://127.0.0.1:3000/useroot/root/4
+//  请求方法：delete
+
+r.delete('/root/:kw',(req,res)=>{
+	console.log(req.params);
+	pool.query('delete from admin where did=?',[req.params.kw],(err,r)=>{
+		if(err){
+			throw err
+		}
+		console.log(r)
+		if(r.affectedRows===0){
+			res.send({code:501,msg:'删除失败'})
+		}else{
+			res.send({code:200,msg:'删除成功'})
+		}
+	})
+})
+// 4.查询管理员接口(get /roots)
+// 接口地址：http://127.0.0.1:3000/useroot/roots
+//  请求方法get
+r.get('/roots',(req,res)=>{
+	let sql = 'select * from admin'
+	pool.query(sql,(err,result)=>{
+		if(err) throw err
+		res.send(result)
+	})
+})
+
+// 5.修改管理员信息
+// 接口地址：http://127.0.0.1:3000/useroot/revise
+r. put('/revise',(req,res,next)=>{
+ 	// console.log('测通')
+ 	console.log(req.body)
+	let obj=req.body
+ 	pool.query('update admin set ? where did=?',[obj,obj.did],(err,r)=>{
+ 		if(err){
+ 			next()
+ 			return
+ 		}
+ 		console.log(r)
+		if(r.affectedRows===0){
+ 			res.send({code:501,msg:'修改失败'})
+		}else{
+ 			res.send({code:200,msg:'修改成功'})
+ 		}
+	})
+	
+})
+
 
 
 //暴露路由器对象

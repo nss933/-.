@@ -6,6 +6,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/video',
+    name: 'video',
+    component: () => import('../views/Video.vue'),
+  },
+  {
     path: '/download',
     name: 'download',
     component: () => import('../views/Download.vue'),

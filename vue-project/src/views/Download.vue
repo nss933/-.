@@ -263,12 +263,16 @@ export default {
   data() {
     return {};
   },
+  mounted(){
+    document.body.style.backgroundColor='rgb(247, 247, 247)'
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 body{
    background-color: rgb(247, 247, 247);
+  height: 100%;
 }
 .download {
   background-color: rgb(247, 247, 247);
@@ -517,6 +521,16 @@ body{
   background-color: #fff;
   margin-bottom: 50px;
    border-bottom: 1px solid #f0f1f2;
+
+   h4{
+    padding: 0 16px;
+    font-size: 24px;
+    line-height: 24px;
+    color: #3b3e40;
+    font-weight: 500;
+    // border-bottom: 1px solid #f0f1f2;
+    text-align: left;
+   }
 }
 .down2 ul{
   background-color: #fff;

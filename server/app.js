@@ -1,5 +1,7 @@
 //引入express模块
 const express = require('express')
+//引入跨域模块cors
+const cors = require('cors')
 //引入常见问题路由
 const commonRouter=require('./routes/common.js')
 //创建WEB服务器
@@ -8,6 +10,10 @@ const app=express()
 app.listen(3000,()=>{
     console.log('WEB服务器启动成功')
 })
+app.use(cors({
+    origin:'*'
+}))
+
 //中间件...
 //将post传递参数转为对象
 app.use(express.urlencoded({

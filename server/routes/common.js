@@ -69,11 +69,13 @@ r.put('/update', (req,res) => {
 
 //接口地址：http://127.0.0.1:3000/v1/common/get
 //请求方式：get （查）
-r.get('/get', (req, res) => {
-    let sql = 'select c_id c_name c_title c_details from f_common'
-    pool.query(sql, (err, result) => {
-        if (err) throw err
-        res.send(result)
+
+r.get('/get', (req,res) => {
+    console.log('测试')
+    let sql = 'select * from f_common'
+    pool.query(sql,(err,result) => {
+		if(err) throw err
+        res.send({'code':200,'msg':'succeed','data':result})
     })
 })
 //暴露路由器对象

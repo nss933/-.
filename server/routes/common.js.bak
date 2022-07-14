@@ -57,7 +57,11 @@ r.put('/update', (req,res) => {
 	console.log(req.body)
 	pool.query('update f_common set ? where c_id=?',[req.body,req.body.c_id],(err,result)=>{
 		if(err) throw err
-		console.log(result)
+		if(result.affectedRows > 0){
+			res.send({'code':200,'msg':'succeed'})
+		}else{
+			res.send({'code':501,'msg':'fail'})
+		}
 	})
 })
 
@@ -65,11 +69,12 @@ r.put('/update', (req,res) => {
 
 //接口地址：http://127.0.0.1:3000/v1/common/get
 //请求方式：get （查）
-r.get('/get', (req, res) => {
+
+r.get('/get', (req,res) => {
     let sql = 'select c_id c_name c_title c_details from f_common'
-    pool.query(sql, (err, result) => {
-        if (err) throw err
-        res.send(result)
+    pool.query(sql,(err,result) => {
+		if(err) throw err
+        res.send({'code':200,'msg':'succeed','data':result})
     })
 })
 //暴露路由器对象

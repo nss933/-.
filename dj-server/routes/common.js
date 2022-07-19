@@ -50,7 +50,7 @@ r.delete('/remove',(req,res)=>{
 })
 
 
-//3.常见问题修改接口(put/update) (改)
+//3.常见问题修改接口(put/update)
 //接口地址：http://127.0.0.1:3000/v1/common/update
 //请求方式：put （改）
 r.put('/update', (req,res) => {
@@ -65,15 +65,17 @@ r.put('/update', (req,res) => {
 	})
 })
 
-//4.常见问题查询接口(get/get)(查)
+//4.常见问题接口(get/get)
 
 //接口地址：http://127.0.0.1:3000/v1/common/get
 //请求方式：get （查）
-r.get('/get', (req, res) => {
+
+r.get('/get', (req,res) => {
+    console.log('测试')
     let sql = 'select * from f_common'
-    pool.query(sql, (err, result) => {
-        if (err) throw err
-        res.send(result)
+    pool.query(sql,(err,result) => {
+		if(err) throw err
+        res.send({'code':200,'msg':'succeed','data':result})
     })
 })
 //暴露路由器对象

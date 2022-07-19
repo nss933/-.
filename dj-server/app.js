@@ -11,6 +11,13 @@ const userRouter=require("./routes/user.js")
 const userootRouter=require('./routes/useroot.js')
 //引入常见问题路由
 const commonRouter=require('./routes/common.js')
+//引入cors模块
+const cors=require('cors')
+
+//解决跨域报错
+app.use(cors());
+
+
 
 //中间件
 //将post传递参数转对象

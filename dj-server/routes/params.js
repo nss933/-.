@@ -4,6 +4,7 @@ const pool=require('../pool.js')
 //引入路由器下模块
 const r=express.Router()
 
+
 //1.参数列表params 查询数据接口（get /seap）
 //接口地址：http://127.0.0.1:3000/params/seap
 //请求方式：get

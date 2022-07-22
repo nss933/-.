@@ -7,9 +7,24 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/rootlogin',
+    name: 'Root',
+    component: () => import('../views/RootLogin.vue'),
+  },
+  {
     path: '/tec',
     name: 'Tec',
     component: () => import('../views/Technique.vue'),
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue'),
+  },
+  {
+    path: '/reg',
+    name: 'Reg',
+    component: () => import('../views/Reg.vue'),
   },
 ]
 
